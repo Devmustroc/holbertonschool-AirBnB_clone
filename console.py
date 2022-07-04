@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """ Method to print instance """
+        """ Method to create an instance """
         if len(arg) == 0:
             print("** class name missing **")
             return
