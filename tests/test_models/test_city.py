@@ -1,40 +1,34 @@
 #!/usr/bin/python3
-"""
-Unittest for user.py
-"""
-import unittest
+"""Unittest module for City"""
+from models.base_model import BaseModel
+from models.state import State
 from models.city import City
-import datetime
+import unittest
 
 
 class TestCity(unittest.TestCase):
-    """Tests instances and methods from city class"""
+    """class testing the City class"""
 
-    c = City()
+    def test_instance(self):
+        """test the creation of an instance"""
+        a = City()
+        b = State()
+        self.assertEqual(a.name, '')
+        self.assertEqual(a.state_id, '')
+        a.name = 'Houssem'
+        a.state_id = b.id
+        self.assertEqual(a.name, 'Houssem')
+        self.assertEqual(a.state_id, b.id)
+        self.assertTrue(hasattr(a, 'id'))
+        self.assertTrue(hasattr(a, 'created_at'))
+        self.assertTrue(hasattr(a, 'updated_at'))
+        self.assertTrue(issubclass(a.__class__, BaseModel))
 
-    def test_class_exists(self):
-        """tests if class exists"""
-        self.assertEqual(str(type(self.c)), "<class 'models.city.City'>")
+    def test_str(self):
+        """Test the string output of the class"""
+        a = City()
+        self.assertEqual(str(a), f"[City] ({a.id}) {a.__dict__}")
 
-    def test_user_inheritance(self):
-        """test if city is a subclass of BaseModel"""
-        self.assertTrue(self.c, City)
-
-    def testHasAttributes(self):
-        """verify if attributes exist"""
-        self.assertTrue(hasattr(self.c, 'state_id'))
-        self.assertTrue(hasattr(self.c, 'name'))
-        self.assertTrue(hasattr(self.c, 'id'))
-        self.assertTrue(hasattr(self.c, 'created_at'))
-        self.assertTrue(hasattr(self.c, 'updated_at'))
-
-    def test_types(self):
-        """tests if the type of the attribute is the correct one"""
-        self.assertIsInstance(self.c.state_id, str)
-        self.assertIsInstance(self.c.name, str)
-        self.assertIsInstance(self.c.id, str)
-        self.assertIsInstance(self.c.created_at, datetime.datetime)
-        self.assertIsInstance(self.c.updated_at, datetime.datetime)
 
 if __name__ == '__main__':
     unittest.main()

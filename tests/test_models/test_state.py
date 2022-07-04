@@ -1,39 +1,29 @@
 #!/usr/bin/python3
-"""
-Unittest for amenity.py
-"""
-import unittest
+"""Unittest module for State"""
+from models.base_model import BaseModel
 from models.state import State
-import datetime
+import unittest
 
 
 class TestState(unittest.TestCase):
-    """ Tests instances and methods from State class """
+    """class testing the State class"""
 
-    s = State()
+    def test_init(self):
+        """test the creation of an instance"""
+        a = State()
+        self.assertEqual(a.name, '')
+        a.name = 'Houssem'
+        self.assertEqual(a.name, 'Houssem')
+        self.assertTrue(hasattr(a, 'id'))
+        self.assertTrue(hasattr(a, 'created_at'))
+        self.assertTrue(hasattr(a, 'updated_at'))
+        self.assertTrue(issubclass(a.__class__, BaseModel))
 
-    def test_class_exists(self):
-        """tests if class exists"""
-        res = "<class 'models.state.State'>"
-        self.assertEqual(str(type(self.s)), res)
+    def test_str(self):
+        """Test the string output of the class"""
+        a = State()
+        self.assertEqual(str(a), f"[State] ({a.id}) {a.__dict__}")
 
-    def test_user_inheritance(self):
-        """test if State is a subclass of BaseModel"""
-        self.assertIsInstance(self.s, State)
-
-    def testHasAttributes(self):
-        """verify if attributes exist"""
-        self.assertTrue(hasattr(self.s, 'name'))
-        self.assertTrue(hasattr(self.s, 'id'))
-        self.assertTrue(hasattr(self.s, 'created_at'))
-        self.assertTrue(hasattr(self.s, 'updated_at'))
-
-    def test_types(self):
-        """tests if the type of the attribute is the correct one"""
-        self.assertIsInstance(self.s.name, str)
-        self.assertIsInstance(self.s.id, str)
-        self.assertIsInstance(self.s.created_at, datetime.datetime)
-        self.assertIsInstance(self.s.updated_at, datetime.datetime)
 
 if __name__ == '__main__':
     unittest.main()
