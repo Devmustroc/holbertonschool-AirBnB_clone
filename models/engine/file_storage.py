@@ -21,7 +21,9 @@ class FileStorage:
 
     def new(self, obj):
         """ sets in dictionary the obj with key <obj class name>.id """
-        FileStorage.__objects[obj.__class__.__name__ + "." + str(obj.id)] = obj
+        if obj:
+            FileStorage.__objects[obj.__class__.__name__ +
+                                  "." + str(obj.id)] = obj
 
     def save(self):
         """ serializes objectss to the JSON file (path: __file_path) """
