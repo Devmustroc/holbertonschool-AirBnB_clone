@@ -13,6 +13,7 @@ from models.state import State
 from models.user import User
 from models.engine.file_storage import FileStorage
 from models import storage
+from datetime import datetime
 
 
 class HBNBCommand(cmd.Cmd):
@@ -111,34 +112,30 @@ class HBNBCommand(cmd.Cmd):
                     new_List = new_List + [value.__str__()]
             print(new_List)
 
-    def do_update(self, arg):
+    def do_update(self, line):
         """ Method to update JSON file"""
-        arg = arg.split()
-        if len(arg) == 0:
-            print('** class name missing **')
-            return
-        elif arg[0] not in self.classes:
+        className_line = line.split()
+        staticArray = ["id", "created_at", "updated_at"]
+        objects = storage.all()
+        if not line:
+            print("** class name missing **")
+        elif className_line[0] not in HBNBCommand.classes.keys():
             print("** class doesn't exist **")
-            return
-        elif len(arg) == 1:
-            print('** instance id missing **')
-            return
+        elif len(className_line) == 1:
+            print("** instance id missing **")
         else:
-            key = arg[0] + '.' + arg[1]
-            if key in storage.all():
-                if len(arg) > 2:
-                    if len(arg) == 3:
-                        print('** value missing **')
-                    else:
-                        setattr(
-                            storage.all()[key],
-                            arg[2],
-                            arg[3][1:-1])
-                        storage.all()[key].save()
-                else:
-                    print('** attribute name missing **')
-            else:
-                print('** no instance found **')
+            instance = className_line[0] + "." + className_line[1]
+            if instance not in storage.all():
+                print("** no instance found **")
+            elif len(className_line) < 3:
+                print("** attribute name missing **")
+            elif len(className_line) < 4:
+                print("** value missing **")
+            elif className_line[2] not in staticArray:
+                ojb = objects[instance]
+                ojb.__dict__[className_line[2]] = className_line[3]
+                ojb.updated_at = datetime.now()
+                ojb.save()
 
 
 if __name__ == "__main__":
