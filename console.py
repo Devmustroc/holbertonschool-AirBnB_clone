@@ -28,11 +28,11 @@ class HBNBCommand(cmd.Cmd):
         EOF force closes the console.
         """
         print()
-        return True
+        exit()
 
     def do_quit(self, line):
         """Quit command to exit the program"""
-        return True
+        exit()
 
     def emptyline(self):
         """ Does nothing on (empty line + "Enter") """
@@ -93,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
                 return
 
     def do_all(self, arg):
-        """Prints string represention of all instances of a given class"""
+        """Method to Prints string represention of all instances of a given class"""
         if not arg:
             print("** class name missing **")
             return
@@ -109,6 +109,35 @@ class HBNBCommand(cmd.Cmd):
                 if obj_name == arg_list[0]:
                     new_List = new_List + [value.__str__()]
             print(new_List)
+
+    def do_update(self, arg):
+        """Method for updating JSON file"""
+        arg = arg.split()
+        if len(arg) == 0:
+            print("** class name missing **'")
+            return
+        elif arg[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        elif len(arg) == 1:
+            print("** instance id missing **")
+            return
+        else:
+            key = arg[0] + "." + arg[1]
+            if key in storage.all():
+                if len(arg) > 2:
+                    if len(arg) == 3:
+                        print("** value missing **")
+                    else:
+                        setattr(
+                            storage.all[key],
+                            arg[2],
+                            arg[3][1:-1])
+                        storage.all()[key].save()
+                else:
+                    print("** attribute name missing **")
+            else:
+                print("** no instance found **")
 
 
 if __name__ == "__main__":
