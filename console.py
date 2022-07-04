@@ -96,21 +96,13 @@ class HBNBCommand(cmd.Cmd):
         """Method to Prints string represention
             of all instances of a given class
         """
-        if not arg:
-            print("** class name missing **")
-            return
-        arg_list = arg.split()
-        if arg_list not in HBNBCommand.classes:
+        if len(arg) == 0:
+            print([str(v) for v in storage.all().values()])
+        elif arg not in HBNBCommand.classes.keys():
             print("** class doesn't exist **")
         else:
-            all_obj = storage.all()
-            new_List = []
-
-            for key, value in all_obj.items():
-                obj_name = value.__class__.__name__
-                if obj_name == arg_list[0]:
-                    new_List = new_List + [value.__str__()]
-            print(new_List)
+            print([str(v) for k, v in storage.all().items()
+                   if arg in k])
 
     def do_update(self, line):
         """ Method to update JSON file"""
