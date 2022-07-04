@@ -11,7 +11,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from models import FileStorage
+from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -62,8 +63,8 @@ class HBNBCommand(cmd.Cmd):
             return
         elif len(arg.split()) > 1:
             key = arg.split()[0] + "." + arg.split()[1]
-            if key in FileStorage.all():
-                pri = FileStorage.all()
+            if key in storage.all():
+                pri = storage.all()
                 print(pri[key])
             else:
                 print("** no instance found **")
@@ -83,9 +84,9 @@ class HBNBCommand(cmd.Cmd):
             return
         if len(arg_list) > 1:
             key = arg_list[0] + '.' + arg_list[1]
-            if key in FileStorage.all():
-                FileStorage.all().pop(key)
-                FileStorage.save()
+            if key in storage.all():
+                storage.all().pop(key)
+                storage.save()
             else:
                 print("** no instance found **")
                 return
@@ -101,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
         if arg_list not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
-            all_obj = FileStorage.all()
+            all_obj = storage.all()
             new_List = []
 
             for key, value in all_obj.items():
@@ -111,33 +112,33 @@ class HBNBCommand(cmd.Cmd):
             print(new_List)
 
     def do_update(self, arg):
-        """Method for updating JSON file"""
+        """ Method to update JSON file"""
         arg = arg.split()
         if len(arg) == 0:
-            print("** class name missing **'")
+            print('** class name missing **')
             return
         elif arg[0] not in self.classes:
             print("** class doesn't exist **")
             return
         elif len(arg) == 1:
-            print("** instance id missing **")
+            print('** instance id missing **')
             return
         else:
-            key = arg[0] + "." + arg[1]
+            key = arg[0] + '.' + arg[1]
             if key in storage.all():
                 if len(arg) > 2:
                     if len(arg) == 3:
-                        print("** value missing **")
+                        print('** value missing **')
                     else:
                         setattr(
-                            storage.all[key],
+                            storage.all()[key],
                             arg[2],
                             arg[3][1:-1])
                         storage.all()[key].save()
                 else:
-                    print("** attribute name missing **")
+                    print('** attribute name missing **')
             else:
-                print("** no instance found **")
+                print('** no instance found **')
 
 
 if __name__ == "__main__":
