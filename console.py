@@ -17,7 +17,7 @@ from models import FileStorage
 class HBNBCommand(cmd.Cmd):
     """Base Command file class"""
 
-    prompt = " (hbnb) "
+    prompt = "(hbnb) "
     classes = {"BaseModel": BaseModel, "User": User, "City": City,
                "Place": Place, "Amenity": Amenity, "Review": Review,
                "State": State}
