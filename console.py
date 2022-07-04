@@ -26,7 +26,6 @@ class HBNBCommand(cmd.Cmd):
         """
         EOF force closes the console.
         """
-        print()
         exit()
 
     def do_quit(self, line):
