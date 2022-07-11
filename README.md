@@ -1,4 +1,4 @@
-![Logo](https://github.com/Devmustroc/holbertonschool-AirBnB_clone/raw/main/files/logo_HBNB.png)
+![Logo](https://github.com/Devmustroc/holbertonschool-AirBnB_clone/raw/main/files/Logo_HBNB.png)
 
 # Airbnb Clone - The Console
 
